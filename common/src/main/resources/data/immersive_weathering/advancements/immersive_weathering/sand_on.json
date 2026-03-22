@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "immersive_weathering:sand_layer_block"
+      "id": "immersive_weathering:sand_layer_block"
     },
     "title": {
       "translate": "advancements.immersive_weathering.sand_on.title"
@@ -24,7 +24,7 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:sandable"
+                "blocks": "#immersive_weathering:sandable"
               }
             }
           },

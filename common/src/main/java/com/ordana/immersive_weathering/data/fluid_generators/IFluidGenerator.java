@@ -2,6 +2,7 @@ package com.ordana.immersive_weathering.data.fluid_generators;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 public interface IFluidGenerator extends Comparable<IFluidGenerator> {
 
-    Codec<IFluidGenerator> CODEC = Type.CODEC.dispatch("type", IFluidGenerator::getType, Type::codec);
+    Codec<IFluidGenerator> CODEC = Type.CODEC.dispatch("type", IFluidGenerator::getType, Type::mapCodec);
 
 
     Optional<BlockPos> tryGenerating(List<Direction> possibleFlowDir, BlockPos pos, Level level, Map<Direction, BlockState> neighborCache);
@@ -47,6 +48,10 @@ public interface IFluidGenerator extends Comparable<IFluidGenerator> {
                 (name) -> ModFluidGenerators.get(name).map(DataResult::success).orElseGet(
                         () -> DataResult.error(() -> "Unknown Fluid Generator type: " + name)),
                 (t) -> DataResult.success(t.name()));
+
+        MapCodec<T> mapCodec() {
+            return MapCodec.assumeMapUnsafe(codec);
+        }
 
     }
 

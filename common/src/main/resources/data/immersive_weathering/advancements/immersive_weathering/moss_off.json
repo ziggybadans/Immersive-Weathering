@@ -1,8 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:shears",
-      "nbt": "{Damage:0}"
+      "id": "minecraft:shears"
     },
     "title": {
       "translate": "advancements.immersive_weathering.moss_off.title"
@@ -25,7 +24,7 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:mossy"
+                "blocks": "#immersive_weathering:mossy"
               }
             }
           },

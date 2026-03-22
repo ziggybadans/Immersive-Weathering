@@ -3,6 +3,8 @@
   "ingredient": {
     "item": "minecraft:stone"
   },
-  "result": "immersive_weathering:stone_wall",
-  "count": 1
+  "result": {
+    "id": "immersive_weathering:stone_wall",
+    "count": 1
+  }
 }

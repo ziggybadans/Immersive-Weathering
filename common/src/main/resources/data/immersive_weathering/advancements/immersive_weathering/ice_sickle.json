@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "immersive_weathering:ice_sickle"
+      "id": "immersive_weathering:ice_sickle"
     },
     "title": {
       "translate": "advancements.immersive_weathering.ice_sickle.title"

@@ -1,6 +1,7 @@
 package com.ordana.immersive_weathering.blocks;
 
 import com.google.common.collect.Lists;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -40,6 +41,7 @@ import java.util.stream.Stream;
 
 //TODO: This stuff should now use the new multiface spreader mechanic when doing whatever it is that it does
 public class IvyBlock extends MultifaceBlock implements BonemealableBlock {
+	public static final MapCodec<IvyBlock> CODEC = simpleCodec(IvyBlock::new);
 	public static final IntegerProperty AGE = ModBlockProperties.AGE;
 	public static final int MAX_AGE = 10;
 	private final MultifaceSpreader spreader = new MultifaceSpreader(this);
@@ -74,12 +76,17 @@ public class IvyBlock extends MultifaceBlock implements BonemealableBlock {
 	}
 
 	@Override
+	protected MapCodec<? extends MultifaceBlock> codec() {
+		return CODEC;
+	}
+
+	@Override
 	public boolean isRandomlyTicking(BlockState state) {
 		return state.getValue(AGE) < MAX_AGE;
 	}
 
 	@Override
-	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+	public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
 		return state.getValue(AGE) < 0 || Stream.of(DIRECTIONS).anyMatch(direction -> this.isValidStateForPlacement(level, state, pos, direction.getOpposite()));
 	}
 
@@ -356,19 +363,18 @@ public class IvyBlock extends MultifaceBlock implements BonemealableBlock {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-		ItemStack stack = player.getItemInHand(hand);
+	protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
 		if (stack.getItem() instanceof ShearsItem && state.getValue(AGE) < MAX_AGE) {
 			level.playSound(player, pos, SoundEvents.GROWING_PLANT_CROP, SoundSource.BLOCKS, 1.0f, 1.0f);
 			ParticleUtils.spawnParticlesOnBlockFaces(level, pos, new BlockParticleOption(ParticleTypes.BLOCK, state), UniformInt.of(3, 5));
 			if (player instanceof ServerPlayer) {
-				if (!player.getAbilities().instabuild) stack.hurtAndBreak(1, player, (l) -> l.broadcastBreakEvent(hand));
+				if (!player.getAbilities().instabuild) stack.hurtAndBreak(1, player, net.minecraft.world.entity.LivingEntity.getSlotForHand(hand));
 				player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
 				level.gameEvent(player, GameEvent.SHEAR, pos);
 				level.setBlockAndUpdate(pos, state.setValue(AGE, MAX_AGE));
 			}
-			return InteractionResult.sidedSuccess(level.isClientSide);
+			return net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
 		}
-		return super.use(state, level, pos, player, hand, hitResult);
+		return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
 	}
 }

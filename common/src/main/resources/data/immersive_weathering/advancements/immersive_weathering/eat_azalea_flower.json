@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "immersive_weathering:azalea_flowers"
+      "id": "immersive_weathering:azalea_flowers"
     },
     "title": {
       "translate": "advancements.immersive_weathering.eat_azalea_flower.title"

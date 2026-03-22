@@ -10,6 +10,8 @@ import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
 import net.mehvahdjukaar.moonlight.api.set.leaves.LeavesType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
@@ -121,7 +123,7 @@ public class LeafPileBlock extends LayerBlock implements BonemealableBlock {
         int layers = this.getLayers(state);
 
         if (layers > 3) {
-            if (CommonConfigs.LEAF_PILES_SLOW.get() && entity instanceof LivingEntity && !(entity instanceof Fox || entity instanceof Bee || EnchantmentHelper.getEnchantmentLevel(Enchantments.DEPTH_STRIDER, (LivingEntity) entity) > 0)) {
+            if (CommonConfigs.LEAF_PILES_SLOW.get() && entity instanceof LivingEntity living && !isExemptFromLeafSlowdown(entity, living, level.registryAccess())) {
                 float stuck = COLLISIONS[Math.max(0, layers - 1)];
                 entity.makeStuckInBlock(state, new Vec3(stuck, 1, stuck));
 
@@ -139,6 +141,15 @@ public class LeafPileBlock extends LayerBlock implements BonemealableBlock {
                 }
             }
         }
+    }
+
+    private static boolean isExemptFromLeafSlowdown(Entity entity, LivingEntity living, RegistryAccess registryAccess) {
+        return entity instanceof Fox
+                || entity instanceof Bee
+                || EnchantmentHelper.getEnchantmentLevel(
+                        registryAccess.lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.DEPTH_STRIDER),
+                        living
+                ) > 0;
     }
 
     @Override
@@ -211,7 +222,7 @@ public class LeafPileBlock extends LayerBlock implements BonemealableBlock {
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, boolean isClient) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
         return this.canBeBonemealed;
     }
 

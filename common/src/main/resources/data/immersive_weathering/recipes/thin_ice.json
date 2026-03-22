@@ -9,7 +9,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:thin_ice",
-    "count": 4
+    "count": 4,
+    "id": "immersive_weathering:thin_ice"
   }
 }

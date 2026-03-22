@@ -6,7 +6,7 @@
     }
   ],
   "result": {
-    "item": "immersive_weathering:moss_clump",
-    "count": 4
+    "count": 4,
+    "id": "immersive_weathering:moss_clump"
   }
 }

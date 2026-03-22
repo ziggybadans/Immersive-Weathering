@@ -12,7 +12,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:waxed_exposed_plate_iron_stairs",
-    "count": 4
+    "count": 4,
+    "id": "immersive_weathering:waxed_exposed_plate_iron_stairs"
   }
 }

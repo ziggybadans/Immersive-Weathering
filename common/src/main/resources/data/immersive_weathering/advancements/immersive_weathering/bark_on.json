@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "immersive_weathering:oak_bark"
+      "id": "immersive_weathering:oak_bark"
     },
     "title": {
       "translate": "advancements.immersive_weathering.bark_on.title"
@@ -24,14 +24,14 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:stripped_logs"
+                "blocks": "#immersive_weathering:stripped_logs"
               }
             }
           },
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "tag": "immersive_weathering:bark"
+              "items": "#immersive_weathering:bark"
             }
           }
         ]

@@ -1,10 +1,8 @@
 package com.ordana.immersive_weathering.data.block_growths;
 
-import com.google.common.collect.ImmutableMap;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.ordana.immersive_weathering.util.StrOpt;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -12,12 +10,10 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.Property;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 //a pair of 2 blocks, useful for double grass
 public class BlockPair extends Pair<BlockState, BlockState> {
@@ -30,7 +26,7 @@ public class BlockPair extends Pair<BlockState, BlockState> {
                     () -> DataResult.error(() -> "Unknown registry element in " + BuiltInRegistries.BLOCK.key() + ":" + block)
             )
     );
-    private static final Codec<BlockState> BLOCK_STATE_CODEC = BlockStateAccessor.getCodec(BLOCK_CODEC, Block::defaultBlockState).stable();
+    private static final Codec<BlockState> BLOCK_STATE_CODEC = BlockState.CODEC;
 
     public static final Codec<BlockPair> CODEC = RecordCodecBuilder.create((instance) -> instance.group(
             BLOCK_STATE_CODEC.fieldOf("block").forGetter(Pair::getFirst),
@@ -58,15 +54,4 @@ public class BlockPair extends Pair<BlockState, BlockState> {
         return this.getSecond()!=null;
     }
 
-
-    public static class BlockStateAccessor extends BlockState {
-
-        public BlockStateAccessor(Block block, ImmutableMap<Property<?>, Comparable<?>> map, MapCodec<BlockState> mapCodec) {
-            super(block, map, mapCodec);
-        }
-
-        public static Codec<BlockState> getCodec(Codec<Block> oCodec, Function<Block, BlockState> osFunction) {
-            return codec(oCodec, osFunction);
-        }
-    }
 }

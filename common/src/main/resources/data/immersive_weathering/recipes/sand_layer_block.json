@@ -9,7 +9,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:sand_layer_block",
-    "count": 6
+    "count": 6,
+    "id": "immersive_weathering:sand_layer_block"
   }
 }

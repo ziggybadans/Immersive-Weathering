@@ -1,28 +1,32 @@
 package com.ordana.immersive_weathering.network;
 
 import com.ordana.immersive_weathering.configs.ClientConfigs;
+import com.ordana.immersive_weathering.ImmersiveWeathering;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.mehvahdjukaar.moonlight.api.platform.network.ChannelHandler;
 import net.mehvahdjukaar.moonlight.api.platform.network.Message;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SendCustomParticlesPacket implements Message {
 
+    public static final CustomPacketPayload.TypeAndCodec<RegistryFriendlyByteBuf, SendCustomParticlesPacket> TYPE =
+            Message.makeType(ImmersiveWeathering.res("custom_particles"), SendCustomParticlesPacket::new);
+
     private final EventType type;
     private final int extraData;
     private final BlockPos pos;
 
-    public SendCustomParticlesPacket(FriendlyByteBuf buffer) {
+    public SendCustomParticlesPacket(RegistryFriendlyByteBuf buffer) {
         this.extraData = buffer.readInt();
         this.type = EventType.values()[buffer.readByte()];
         this.pos = buffer.readBlockPos();
@@ -35,15 +39,20 @@ public class SendCustomParticlesPacket implements Message {
     }
 
     @Override
-    public void writeToBuffer(FriendlyByteBuf buf) {
+    public void write(RegistryFriendlyByteBuf buf) {
         buf.writeInt(this.extraData);
         buf.writeByte(type.ordinal());
         buf.writeBlockPos(pos);
     }
 
     @Override
-    public void handle(ChannelHandler.Context context) {
+    public void handle(Message.Context context) {
         clientStuff(type, pos, extraData);
+    }
+
+    @Override
+    public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
+        return TYPE.type();
     }
 
     @Environment(EnvType.CLIENT)

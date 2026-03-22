@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "immersive_weathering:moss_clump"
+      "id": "immersive_weathering:moss_clump"
     },
     "title": {
       "translate": "advancements.immersive_weathering.moss_on.title"
@@ -24,7 +24,7 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:mossable"
+                "blocks": "#immersive_weathering:mossable"
               }
             }
           },

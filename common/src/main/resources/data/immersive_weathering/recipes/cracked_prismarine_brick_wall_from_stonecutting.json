@@ -3,6 +3,8 @@
   "ingredient": {
     "item": "immersive_weathering:cracked_prismarine_bricks"
   },
-  "result": "immersive_weathering:cracked_prismarine_brick_wall",
-  "count": 1
+  "result": {
+    "id": "immersive_weathering:cracked_prismarine_brick_wall",
+    "count": 1
+  }
 }

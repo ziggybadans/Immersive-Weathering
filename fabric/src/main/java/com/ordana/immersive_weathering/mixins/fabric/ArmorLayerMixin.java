@@ -48,13 +48,14 @@ public abstract class ArmorLayerMixin <T extends LivingEntity, M extends Humanoi
                 ResourceLocation resourcelocation = ARMOR_LOCATION_CACHE.get(texture);
 
                 if (resourcelocation == null) {
-                    resourcelocation = new ResourceLocation(texture);
+                    resourcelocation = ResourceLocation.parse(texture);
                     ARMOR_LOCATION_CACHE.put(texture, resourcelocation);
                 }
 
-                VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(buffer, RenderType.armorCutoutNoCull(
-                    resourcelocation), false, bl);
-                model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1.0F);
+                VertexConsumer vertexConsumer = ItemRenderer.getArmorFoilBuffer(
+                    buffer, RenderType.armorCutoutNoCull(resourcelocation), itemStack.hasFoil()
+                );
+                model.renderToBuffer(poseStack, vertexConsumer, packedLight, OverlayTexture.NO_OVERLAY);
 
 
                 ci.cancel();

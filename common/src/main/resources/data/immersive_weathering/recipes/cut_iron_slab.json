@@ -9,7 +9,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:cut_iron_slab",
-    "count": 6
+    "count": 6,
+    "id": "immersive_weathering:cut_iron_slab"
   }
 }

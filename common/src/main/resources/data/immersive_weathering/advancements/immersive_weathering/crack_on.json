@@ -1,8 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:iron_pickaxe",
-      "nbt": "{Damage:0}"
+      "id": "minecraft:iron_pickaxe"
     },
     "title": {
       "translate": "advancements.immersive_weathering.crack_on.title"
@@ -25,14 +24,14 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:crackable"
+                "blocks": "#immersive_weathering:crackable"
               }
             }
           },
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "tag": "immersive_weathering:pickaxes"
+              "items": "#immersive_weathering:pickaxes"
             }
           }
         ]

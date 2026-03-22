@@ -34,7 +34,7 @@ public class ImmersiveWeatheringClient {
         ClientHelper.addClientSetup(ImmersiveWeatheringClient::setup);
         ClientDynamicResourcesHandler.INSTANCE.register();
 
-        ClientHelper.registerOptionalTexturePack(ImmersiveWeathering.res("visual_waxed_iron_items"));
+        ClientHelper.registerOptionalTexturePack(ImmersiveWeathering.res("visual_waxed_iron_items"), false);
 
         ClientHelper.addEntityRenderersRegistration(ImmersiveWeatheringClient::registerEntityRenderers);
         ClientHelper.addBlockColorsRegistration(ImmersiveWeatheringClient::registerBlockColors);

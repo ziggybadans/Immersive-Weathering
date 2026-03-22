@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "immersive_weathering:stone_brick"
+      "id": "immersive_weathering:stone_brick"
     },
     "title": {
       "translate": "advancements.immersive_weathering.crack_off.title"
@@ -24,14 +24,14 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:cracked"
+                "blocks": "#immersive_weathering:cracked"
               }
             }
           },
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "tag": "immersive_weathering:bricks"
+              "items": "#immersive_weathering:bricks"
             }
           }
         ]

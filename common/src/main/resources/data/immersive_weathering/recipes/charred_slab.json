@@ -3,7 +3,9 @@
   "ingredient": {
     "tag": "immersive_weathering:flammable_slabs"
   },
-  "result": "immersive_weathering:charred_slab",
+  "result": {
+    "id": "immersive_weathering:charred_slab"
+  },
   "experience": 0.15,
   "cookingtime": 200
 }

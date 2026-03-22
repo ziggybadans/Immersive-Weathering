@@ -10,7 +10,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:chiseled_prismarine_bricks",
-    "count": 1
+    "count": 1,
+    "id": "immersive_weathering:chiseled_prismarine_bricks"
   }
 }

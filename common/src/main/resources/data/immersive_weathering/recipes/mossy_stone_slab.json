@@ -9,7 +9,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:mossy_stone_slab",
-    "count": 6
+    "count": 6,
+    "id": "immersive_weathering:mossy_stone_slab"
   }
 }

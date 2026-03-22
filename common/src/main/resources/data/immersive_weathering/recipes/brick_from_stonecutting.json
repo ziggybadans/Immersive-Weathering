@@ -3,6 +3,8 @@
   "ingredient": {
     "item": "minecraft:bricks"
   },
-  "result": "minecraft:brick",
-  "count": 4
+  "result": {
+    "id": "minecraft:brick",
+    "count": 4
+  }
 }

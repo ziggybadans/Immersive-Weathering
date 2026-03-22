@@ -10,7 +10,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:stone_wall",
-    "count": 6
+    "count": 6,
+    "id": "immersive_weathering:stone_wall"
   }
 }

@@ -1,8 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:flint_and_steel",
-      "nbt": "{Damage:0}"
+      "id": "minecraft:flint_and_steel"
     },
     "title": {
       "translate": "advancements.immersive_weathering.moss_off_2.title"
@@ -25,7 +24,7 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:mossy"
+                "blocks": "#immersive_weathering:mossy"
               }
             }
           },

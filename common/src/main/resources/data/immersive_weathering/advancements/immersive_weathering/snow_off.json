@@ -1,8 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:iron_shovel",
-      "nbt": "{Damage:0}"
+      "id": "minecraft:iron_shovel"
     },
     "title": {
       "translate": "advancements.immersive_weathering.snow_off.title"
@@ -25,14 +24,14 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:snowy"
+                "blocks": "#immersive_weathering:snowy"
               }
             }
           },
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "tag": "minecraft:shovels"
+              "items": "#minecraft:shovels"
             }
           }
         ]

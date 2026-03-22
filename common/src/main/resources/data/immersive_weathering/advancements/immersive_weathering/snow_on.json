@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:snowball"
+      "id": "minecraft:snowball"
     },
     "title": {
       "translate": "advancements.immersive_weathering.snow_on.title"
@@ -24,7 +24,7 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:snowable"
+                "blocks": "#immersive_weathering:snowable"
               }
             }
           },

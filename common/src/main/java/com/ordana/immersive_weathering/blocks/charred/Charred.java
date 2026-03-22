@@ -9,34 +9,30 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.ParticleUtils;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.FallingBlockEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.FlintAndSteelItem;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraft.world.phys.BlockHitResult;
 
 public interface Charred extends ILightable, Fallable {
 
@@ -59,7 +55,7 @@ public interface Charred extends ILightable, Fallable {
             }
         }
         if (temperature < 0 || isTouchingWater) {
-            if (isLitUp(state)) {
+            if (state.getValue(SMOLDERING)) {
                 //TODO: extinguish
                 level.setBlockAndUpdate(pos, state.setValue(SMOLDERING, false));
             }
@@ -75,7 +71,7 @@ public interface Charred extends ILightable, Fallable {
             double f = (double) pos.getZ() + random.nextDouble();
             level.addParticle(new BlockParticleOption(ParticleTypes.FALLING_DUST, state), d, e, f, 0.0, 0.0, 0.0);
         }
-        if (isLitUp(state)) {
+        if (state.getValue(SMOLDERING)) {
             int i = pos.getX();
             int j = pos.getY();
             int k = pos.getZ();
@@ -87,8 +83,8 @@ public interface Charred extends ILightable, Fallable {
     }
 
     default void onEntityStepOn(BlockState state, Entity entity) {
-        if (isLitUp(state)) {
-            if (!entity.fireImmune() && entity instanceof LivingEntity && !EnchantmentHelper.hasFrostWalker((LivingEntity) entity)) {
+        if (state.getValue(SMOLDERING)) {
+            if (!entity.fireImmune() && entity instanceof LivingEntity living && !hasFrostWalker(entity.level(), living)) {
                 entity.hurt(entity.damageSources().hotFloor(), 1.0F);
             }
         }
@@ -96,13 +92,13 @@ public interface Charred extends ILightable, Fallable {
 
 
     @Override
-    default boolean isLitUp(BlockState state) {
+    default boolean isLitUp(BlockState state, BlockGetter level, BlockPos pos) {
         return state.getValue(SMOLDERING);
     }
 
     @Override
-    default BlockState toggleLitState(BlockState state, boolean lit) {
-        return state.setValue(SMOLDERING, lit);
+    default void setLitUp(BlockState state, LevelAccessor level, BlockPos pos, Entity entity, boolean lit) {
+        level.setBlock(pos, state.setValue(SMOLDERING, lit), 3);
     }
 
 
@@ -152,35 +148,14 @@ public interface Charred extends ILightable, Fallable {
     default void onLand(Level level, BlockPos pos, BlockState blockState, BlockState blockState2, FallingBlockEntity fallingBlock) {
     }
 
-    default InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        ItemStack stack = player.getItemInHand(hand);
-        Item item = stack.getItem();
-        boolean flint = item instanceof FlintAndSteelItem;
-        boolean charge = stack.is(Items.FIRE_CHARGE);
-        if ((flint || charge) && !state.getValue(SMOLDERING)) {
-            level.playSound(player, pos, flint ? SoundEvents.FLINTANDSTEEL_USE : SoundEvents.FIRECHARGE_USE, SoundSource.BLOCKS, 1.0f, 1.0f);
-            ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ModParticles.EMBERSPARK.get(), UniformInt.of(3, 5));
-            if (!player.getAbilities().instabuild) {
-                if (flint) stack.hurtAndBreak(1, player, (l) -> l.broadcastBreakEvent(hand));
-                if (charge) stack.shrink(1);
-            }
-            if (player instanceof ServerPlayer) {
-                level.setBlockAndUpdate(pos, state.setValue(SMOLDERING, Boolean.TRUE));
-                player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
-            }
-            return InteractionResult.SUCCESS;
-        }
-        else if (state.getValue(SMOLDERING)) {
-            level.playSound(player, pos, SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 1.0f, 1.0f);
-            if (level.isClientSide()) {
-                ParticleUtils.spawnParticlesOnBlockFaces(level, pos, ModParticles.EMBERSPARK.get(), UniformInt.of(3, 5));
-                ParticleUtil.spawnParticlesOnBlockFaces(level, pos, ParticleTypes.SMOKE, UniformInt.of(3, 5), -0.05f, 0.05f, false);
-            }
-            if (player instanceof ServerPlayer) {
-                level.setBlockAndUpdate(pos, state.setValue(SMOLDERING, Boolean.FALSE));
-            }
-            return InteractionResult.SUCCESS;
-        }
-        return InteractionResult.PASS;
+    default ItemInteractionResult useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, net.minecraft.world.phys.BlockHitResult hitResult) {
+        return this.lightableInteractWithPlayerItem(state, level, pos, player, hand, stack);
+    }
+
+    private static boolean hasFrostWalker(Level level, LivingEntity living) {
+        return EnchantmentHelper.getEnchantmentLevel(
+                level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.FROST_WALKER),
+                living
+        ) > 0;
     }
 }

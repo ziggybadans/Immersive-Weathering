@@ -1,18 +1,26 @@
 package com.ordana.immersive_weathering.network;
 
-import com.ordana.immersive_weathering.ImmersiveWeathering;
-import net.mehvahdjukaar.moonlight.api.platform.network.ChannelHandler;
-import net.mehvahdjukaar.moonlight.api.platform.network.NetworkDir;
+import net.mehvahdjukaar.moonlight.api.platform.network.Message;
+import net.mehvahdjukaar.moonlight.api.platform.network.NetworkHelper;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 
 public class NetworkHandler {
 
-    public static final ChannelHandler CHANNEL = ChannelHandler.builder(ImmersiveWeathering.MOD_ID)
-            .register(NetworkDir.PLAY_TO_CLIENT, SendCustomParticlesPacket.class, SendCustomParticlesPacket::new)
-            .build();
+    public static final Channel CHANNEL = new Channel();
 
 
     public static void init() {
+        NetworkHelper.addNetworkRegistration(
+                event -> event.registerClientBound(SendCustomParticlesPacket.TYPE),
+                1
+        );
     }
 
+    public static final class Channel {
+        public void sendToAllClientPlayersInRange(ServerLevel level, BlockPos pos, double range, Message message) {
+            NetworkHelper.sendToAllClientPlayersInRange(level, pos, range, message);
+        }
+    }
 
 }

@@ -10,25 +10,30 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.Fallable;
 import net.minecraft.world.level.block.MangrovePropaguleBlock;
+import net.minecraft.world.level.block.grower.TreeGrower;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.material.Fluids;
 
-import javax.swing.text.html.BlockView;
 import java.util.Random;
 
 public class ModPropaguleBlock extends MangrovePropaguleBlock implements Fallable {
     private static final BooleanProperty WATERLOGGED;
 
     public ModPropaguleBlock(Properties properties) {
-        super(properties);
+        this(TreeGrower.MANGROVE, properties);
+    }
+
+    public ModPropaguleBlock(TreeGrower treeGrower, Properties properties) {
+        super(treeGrower, properties);
     }
 
     public void onPlace(BlockState state, Level level, BlockPos pos, BlockState oldState, boolean notify) {
@@ -89,7 +94,7 @@ public class ModPropaguleBlock extends MangrovePropaguleBlock implements Fallabl
 
     }
 
-    public int color(BlockState state, BlockView level, BlockPos pos) {
+    public int color(BlockState state, BlockGetter level, BlockPos pos) {
         return -16777216;
     }
 

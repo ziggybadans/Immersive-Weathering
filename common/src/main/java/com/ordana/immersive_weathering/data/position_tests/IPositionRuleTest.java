@@ -2,6 +2,7 @@ package com.ordana.immersive_weathering.data.position_tests;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.Level;
@@ -12,7 +13,7 @@ import java.util.function.Supplier;
 public interface IPositionRuleTest {
 
     Codec<IPositionRuleTest> CODEC = IPositionRuleTest.Type.CODEC
-            .dispatch("type", IPositionRuleTest::getType, IPositionRuleTest.Type::codec);
+            .dispatch("type", IPositionRuleTest::getType, IPositionRuleTest.Type::mapCodec);
 
 
     //just loads the class and registers its stuff
@@ -41,6 +42,10 @@ public interface IPositionRuleTest {
                 (name) -> ModPositionRuleTests.get(name).map(DataResult::success).orElseGet(
                         () -> DataResult.error(() -> "Unknown Position Predicate: " + name)),
                 (t) -> DataResult.success(t.name()));
+
+        MapCodec<T> mapCodec() {
+            return MapCodec.assumeMapUnsafe(codec);
+        }
 
     }
 

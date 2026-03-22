@@ -90,7 +90,7 @@ public class LightningGrowth extends BuiltinBlockGrowth {
         } else if (state.is(BlockTags.SAND)) {
             level.setBlock(pos, ModBlocks.VITRIFIED_SAND.get().defaultBlockState(), 3);
             if (level.random.nextFloat() < CommonConfigs.FULGURITE_CHANCE.get()) {
-                var dir = list.getRandom(level.random).get().getData();
+                var dir = list.getRandom(level.random).get().data();
                 var offset = pos.relative(dir);
                 if(level.getBlockState(offset).isAir()){
                     level.setBlock(offset, ModBlocks.FULGURITE.get().defaultBlockState()

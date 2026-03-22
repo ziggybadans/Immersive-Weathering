@@ -3,7 +3,9 @@
   "ingredient": {
     "tag": "immersive_weathering:flammable_planks"
   },
-  "result": "immersive_weathering:charred_planks",
+  "result": {
+    "id": "immersive_weathering:charred_planks"
+  },
   "experience": 0.15,
   "cookingtime": 200
 }

@@ -3,6 +3,8 @@
   "ingredient": {
     "item": "immersive_weathering:mossy_stone"
   },
-  "result": "immersive_weathering:mossy_stone_wall",
-  "count": 1
+  "result": {
+    "id": "immersive_weathering:mossy_stone_wall",
+    "count": 1
+  }
 }

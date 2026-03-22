@@ -1,53 +1,13 @@
 package com.ordana.immersive_weathering.items.materials;
 
-import com.ordana.immersive_weathering.reg.ModItems;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.item.ArmorItem;
+import net.minecraft.core.Holder;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.ArmorMaterials;
 
-public class FlowerCrownMaterial implements ArmorMaterial {
+public final class FlowerCrownMaterial {
 
-    public static final FlowerCrownMaterial INSTANCE = new FlowerCrownMaterial();
-
-    @Override
-    public int getDurabilityForType(ArmorItem.Type type) {
-        return 64;
+    private FlowerCrownMaterial() {
     }
 
-    @Override
-    public int getDefenseForType(ArmorItem.Type type) {
-        return 0;
-    }
-
-    @Override
-    public int getEnchantmentValue() {
-        return 64;
-    }
-
-    @Override
-    public SoundEvent getEquipSound() {
-        return SoundEvents.ARMOR_EQUIP_LEATHER;
-    }
-
-    @Override
-    public Ingredient getRepairIngredient() {
-        return Ingredient.of(ModItems.AZALEA_FLOWERS.get());
-    }
-
-    @Override
-    public String getName() {
-        return "flower";
-    }
-
-    @Override
-    public float getToughness() {
-        return 0f;
-    }
-
-    @Override
-    public float getKnockbackResistance() {
-        return 0;
-    }
+    public static final Holder<ArmorMaterial> INSTANCE = ArmorMaterials.LEATHER;
 }

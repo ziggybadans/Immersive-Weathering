@@ -11,7 +11,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:mossy_brick_stairs",
-    "count": 4
+    "count": 4,
+    "id": "immersive_weathering:mossy_brick_stairs"
   }
 }

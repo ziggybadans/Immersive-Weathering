@@ -10,16 +10,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.AbstractGlassBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.TransparentBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class FrostyGlassBlock extends AbstractGlassBlock implements Frosty {
+public class FrostyGlassBlock extends TransparentBlock implements Frosty {
 
-    public FrostyGlassBlock(Properties settings) {
+    public FrostyGlassBlock(BlockBehaviour.Properties settings) {
         super(settings);
         this.registerDefaultState(this.stateDefinition.any().setValue(NATURAL, false));
     }
@@ -48,11 +49,14 @@ public class FrostyGlassBlock extends AbstractGlassBlock implements Frosty {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         InteractionResult success = interactWithPlayer(state, level, pos, player, hand);
-        if (success != InteractionResult.PASS) return success;
+        if (success != InteractionResult.PASS) {
+            if (success == InteractionResult.FAIL) return net.minecraft.world.ItemInteractionResult.FAIL;
+            return net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
+        }
 
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useItemOn(stack, state, level, pos, player, hand, hit);
     }
 
 }

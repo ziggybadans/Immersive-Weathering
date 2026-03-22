@@ -39,27 +39,27 @@ public class EmiIntegration implements EmiPlugin {
     @Override
     public void register(EmiRegistry registry) {
 
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/oak_log"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/birch_log"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/spruce_log"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/jungle_log"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/dark_oak_log"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/acacia_log"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/mangrove_log"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/cherry_log"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/bamboo_block"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/warped_stem"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/crimson_stem"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/oak_wood"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/birch_wood"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/spruce_wood"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/jungle_wood"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/dark_oak_wood"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/acacia_wood"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/mangrove_wood"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/cherry_wood"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/warped_hyphae"));
-        registry.removeRecipes(new ResourceLocation("emi", "/world/stripping/minecraft/crimson_hyphae"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/oak_log"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/birch_log"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/spruce_log"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/jungle_log"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/dark_oak_log"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/acacia_log"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/mangrove_log"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/cherry_log"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/bamboo_block"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/warped_stem"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/crimson_stem"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/oak_wood"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/birch_wood"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/spruce_wood"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/jungle_wood"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/dark_oak_wood"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/acacia_wood"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/mangrove_wood"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/cherry_wood"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/warped_hyphae"));
+        registry.removeRecipes(ResourceLocation.fromNamespaceAndPath("emi", "/world/stripping/minecraft/crimson_hyphae"));
 
         EmiIngredient pickaxes = EmiIngredient.of(ItemTags.PICKAXES);
         EmiIngredient axes = EmiIngredient.of(ItemTags.AXES);
@@ -80,7 +80,7 @@ public class EmiIntegration implements EmiPlugin {
 
         //OTHER
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/rooted_grass_uprooting"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/rooted_grass_uprooting"))
             .leftInput(EmiStack.of(ModBlocks.ROOTED_GRASS_BLOCK.get()))
             .rightInput(hoes, true)
             .output(EmiStack.of(Items.HANGING_ROOTS))
@@ -88,7 +88,7 @@ public class EmiIntegration implements EmiPlugin {
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/campfire_extinguishing"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/campfire_extinguishing"))
             .leftInput(EmiStack.of(Blocks.CAMPFIRE))
             .rightInput(shovels, true)
             .output(EmiStack.of(ModBlocks.SOOT.get()))
@@ -96,28 +96,28 @@ public class EmiIntegration implements EmiPlugin {
 
         //TILLING
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/clay_tilling"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/clay_tilling"))
             .leftInput(EmiIngredient.of(Ingredient.of(ModBlocks.EARTHEN_CLAY.get(), ModBlocks.GRASSY_EARTHEN_CLAY.get())))
             .rightInput(hoes, true)
             .output(EmiStack.of(ModBlocks.EARTHEN_CLAY_FARMLAND.get()))
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/sandy_tilling"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/sandy_tilling"))
             .leftInput(EmiIngredient.of(Ingredient.of(ModBlocks.SANDY_DIRT.get(), ModBlocks.GRASSY_SANDY_DIRT.get())))
             .rightInput(hoes, true)
             .output(EmiStack.of(ModBlocks.SANDY_FARMLAND.get()))
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/silt_tilling"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/silt_tilling"))
             .leftInput(EmiIngredient.of(Ingredient.of(ModBlocks.SILT.get(), ModBlocks.GRASSY_SILT.get())))
             .rightInput(hoes, true)
             .output(EmiStack.of(ModBlocks.SILTY_FARMLAND.get()))
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/loam_tilling"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/loam_tilling"))
             .leftInput(EmiStack.of(ModBlocks.LOAM.get()))
             .rightInput(hoes, true)
             .output(EmiStack.of(ModBlocks.LOAMY_FARMLAND.get()))
@@ -127,7 +127,7 @@ public class EmiIntegration implements EmiPlugin {
         BiMap<Block, Block> flowering = WeatheringHelper.FLOWERY_BLOCKS.get();
         for (Block key : flowering.keySet()) {
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", key.getDescriptionId()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", key.getDescriptionId()))
                 .leftInput(EmiStack.of(flowering.get(key)))
                 .rightInput(azalea, false)
                 .output(EmiStack.of(key))
@@ -136,7 +136,7 @@ public class EmiIntegration implements EmiPlugin {
         BiMap<Block, Block> unflowering = WeatheringHelper.FLOWERY_BLOCKS.get().inverse();
         for (Block key : unflowering.keySet()) {
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", key.getDescriptionId()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", key.getDescriptionId()))
                 .leftInput(EmiStack.of(unflowering.get(key)))
                 .rightInput(shears, true)
                 .output(azalea)
@@ -151,7 +151,7 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack input = EmiStack.of(frost.get(key));
             EmiStack output = EmiStack.of(key);
             if (!key.defaultBlockState().is(Blocks.AIR)) registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/block_frosting/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/block_frosting/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(input)
                 .rightInput(flint_n_steel, true)
                 .output(output)
@@ -163,7 +163,7 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack input = EmiStack.of(unfrost.get(key));
             EmiStack output = EmiStack.of(key);
             if (!key.defaultBlockState().is(ModBlocks.FROST.get())) registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/block_frosting/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/block_frosting/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(input)
                 .rightInput(EmiStack.of(ModItems.FROST_ITEM.get()), false)
                 .output(output)
@@ -176,7 +176,7 @@ public class EmiIntegration implements EmiPlugin {
             EmiIngredient unburnt_block = EmiIngredient.of(key);
             EmiStack charred_block = EmiStack.of(charred.get(key));
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/block_charring/" + key.location().getNamespace() + "/" + key.location().getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/block_charring/" + key.location().getNamespace() + "/" + key.location().getPath()))
                 .leftInput(unburnt_block)
                 .rightInput(EmiStack.of(ModItems.FIRE.get()), true)
                 .output(charred_block)
@@ -192,7 +192,7 @@ public class EmiIntegration implements EmiPlugin {
             if (cracks.get(key) instanceof Crackable cracked) {
                 EmiStack brick = EmiStack.of(cracked.getRepairItem(cracks.get(key).defaultBlockState()));
                 registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                    .id(new ResourceLocation("immersive_weathering", "/brick_cracking/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                    .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/brick_cracking/" + blockId.getNamespace() + "/" + blockId.getPath()))
                     .leftInput(input)
                     .rightInput(pickaxes, true)
                     .output(output)
@@ -207,7 +207,7 @@ public class EmiIntegration implements EmiPlugin {
             if (key instanceof Crackable cracked) {
                 var brick = cracked.getRepairItem(key.defaultBlockState());
                 registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                    .id(new ResourceLocation("immersive_weathering", "/brick_repair/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                    .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/brick_repair/" + blockId.getNamespace() + "/" + blockId.getPath()))
                     .leftInput(output)
                     .rightInput(EmiIngredient.of(Ingredient.of(brick, ModItems.MORTAR.get())), false)
                     .output(input)
@@ -222,7 +222,7 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack input = EmiStack.of(key);
             EmiStack output = EmiStack.of(moss.get(key));
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/moss_shear/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/moss_shear/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(output)
                 .rightInput(shears, true)
                 .output(input)
@@ -234,7 +234,7 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack input = EmiStack.of(key);
             EmiStack output = EmiStack.of(moss.get(key));
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/moss_burn/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/moss_burn/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(output)
                 .rightInput(flint_n_steel, true)
                 .output(input)
@@ -245,13 +245,13 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack input = EmiStack.of(key);
             EmiStack output = EmiStack.of(moss.get(key));
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/mossing/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/mossing/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(input)
                 .rightInput(EmiStack.of(ModItems.MOSS_CLUMP.get()), false)
                 .output(output)
                 .build());
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/gold_mossing/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/gold_mossing/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(input)
                 .rightInput(EmiStack.of(ModItems.ENCHANTED_GOLDEN_MOSS_CLUMP.get()), true)
                 .output(output)
@@ -265,7 +265,7 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack output = EmiStack.of(sandy.get(key));
             ResourceLocation blockId = BuiltInRegistries.ITEM.getKey(key.asItem());
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/unsanding/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/unsanding/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(output)
                 .rightInput(shovels, true)
                 .output(input)
@@ -277,7 +277,7 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack output = EmiStack.of(sandy.get(key));
             ResourceLocation blockId = BuiltInRegistries.ITEM.getKey(key.asItem());
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/block_sanding/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/block_sanding/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(input)
                 .rightInput(EmiStack.of(ModBlocks.SAND_LAYER_BLOCK.get()), false)
                 .output(output)
@@ -291,7 +291,7 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack output = EmiStack.of(snowy.get(key));
             ResourceLocation blockId = BuiltInRegistries.ITEM.getKey(key.asItem());
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/unsnowing/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/unsnowing/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(output)
                 .rightInput(shovels, true)
                 .output(input)
@@ -303,7 +303,7 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack output = EmiStack.of(snowy.get(key));
             ResourceLocation blockId = BuiltInRegistries.ITEM.getKey(key.asItem());
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/block_snowing/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/block_snowing/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(input)
                 .rightInput(EmiStack.of(Items.SNOWBALL), false)
                 .output(output)
@@ -317,7 +317,7 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack input = EmiStack.of(key);
             EmiStack output = EmiStack.of(rust.get(key));
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/sponge_rusting/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/sponge_rusting/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(input)
                 .rightInput(EmiStack.of(Items.WET_SPONGE), true)
                 .output(output)
@@ -339,7 +339,7 @@ public class EmiIntegration implements EmiPlugin {
             if (bark == null) bark = EmiStack.of(WeatheringHelper.getBarkForStrippedLog(log.get(key).defaultBlockState()).get().getFirst());
 
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/block_stripping/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/block_stripping/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(raw_log)
                 .rightInput(axes, true)
                 .output(bark)
@@ -359,7 +359,7 @@ public class EmiIntegration implements EmiPlugin {
             if (bark == null) bark = EmiStack.of(WeatheringHelper.getBarkForStrippedLog(log.get(key).defaultBlockState()).get().getFirst());
 
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(new ResourceLocation("immersive_weathering", "/block_unstripping/" + blockId.getNamespace() + "/" + blockId.getPath()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/block_unstripping/" + blockId.getNamespace() + "/" + blockId.getPath()))
                 .leftInput(stripped_log)
                 .rightInput(bark, false)
                 .output(raw_log)
@@ -370,7 +370,7 @@ public class EmiIntegration implements EmiPlugin {
 
         //FLUID GENERATORS
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/andesite"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/andesite"))
             .leftInput(waterCatalyst)
             .rightInput(lavaCatalyst, true)
             .rightInput(EmiStack.of(Blocks.DIORITE), true, s -> s.appendTooltip(
@@ -379,7 +379,7 @@ public class EmiIntegration implements EmiPlugin {
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/diorite"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/diorite"))
             .leftInput(waterCatalyst)
             .rightInput(lavaCatalyst, true)
             .rightInput(EmiIngredient.of(ModTags.QUARTZ_BLOCKS), true, s -> s.appendTooltip(
@@ -388,7 +388,7 @@ public class EmiIntegration implements EmiPlugin {
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/granite"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/granite"))
             .leftInput(waterCatalyst)
             .rightInput(lavaCatalyst, true)
             .rightInput(EmiStack.of(Blocks.DIORITE), true, s -> s.appendTooltip(
@@ -399,7 +399,7 @@ public class EmiIntegration implements EmiPlugin {
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/basalt_below"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/basalt_below"))
             .leftInput(lavaCatalyst)
             .rightInput(EmiStack.of(Blocks.BASALT), true, s -> s.appendTooltip(
                 Component.translatable("tooltip.immersive_weathering.below").setStyle(style)))
@@ -407,7 +407,7 @@ public class EmiIntegration implements EmiPlugin {
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/blackstone"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/blackstone"))
             .leftInput(lavaCatalyst)
             .rightInput(EmiStack.of(Blocks.MAGMA_BLOCK), true, s -> s.appendTooltip(
                 Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
@@ -417,7 +417,7 @@ public class EmiIntegration implements EmiPlugin {
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/calcite"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/calcite"))
             .leftInput(lavaCatalyst)
             .rightInput(EmiStack.of(Blocks.MAGMA_BLOCK), true, s -> s.appendTooltip(
                 Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
@@ -429,7 +429,7 @@ public class EmiIntegration implements EmiPlugin {
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/crying_obsidian"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/crying_obsidian"))
             .leftInput(lavaCatalyst)
             .rightInput(waterCatalyst, true)
             .rightInput(EmiStack.of(Blocks.SOUL_FIRE), true, s -> s.appendTooltip(
@@ -438,7 +438,7 @@ public class EmiIntegration implements EmiPlugin {
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/magma_block"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/magma_block"))
             .leftInput(lavaCatalyst)
             .rightInput(waterCatalyst, true, s -> s.appendTooltip(
                 Component.translatable("tooltip.immersive_weathering.below").setStyle(style)).appendTooltip(
@@ -447,7 +447,7 @@ public class EmiIntegration implements EmiPlugin {
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/tuff"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/tuff"))
             .leftInput(lavaCatalyst)
             .rightInput(waterCatalyst, true, s -> s.appendTooltip(
                 Component.translatable("tooltip.immersive_weathering.below").setStyle(style)).appendTooltip(
@@ -456,7 +456,7 @@ public class EmiIntegration implements EmiPlugin {
             .build());
 
         registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(new ResourceLocation("immersive_weathering", "/smooth_basalt"))
+            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/smooth_basalt"))
             .leftInput(lavaCatalyst)
             .rightInput(EmiStack.of(Blocks.BLUE_ICE), true, s -> s.appendTooltip(
                 Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))

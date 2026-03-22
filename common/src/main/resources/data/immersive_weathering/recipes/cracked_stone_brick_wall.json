@@ -10,7 +10,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:cracked_stone_brick_wall",
-    "count": 6
+    "count": 6,
+    "id": "immersive_weathering:cracked_stone_brick_wall"
   }
 }

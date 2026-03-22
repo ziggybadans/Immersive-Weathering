@@ -1,8 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:iron_axe",
-      "nbt": "{Damage:0}"
+      "id": "minecraft:iron_axe"
     },
     "title": {
       "translate": "advancements.immersive_weathering.rust_off.title"
@@ -25,14 +24,14 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:unscrapeable"
+                "blocks": "#immersive_weathering:unscrapeable"
               }
             }
           },
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "tag": "minecraft:axes"
+              "items": "#minecraft:axes"
             }
           }
         ]

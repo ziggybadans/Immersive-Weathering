@@ -1,8 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:golden_shovel",
-      "nbt": "{Damage:0}"
+      "id": "minecraft:golden_shovel"
     },
     "title": {
       "translate": "advancements.immersive_weathering.sand_off.title"
@@ -25,14 +24,14 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:sandy"
+                "blocks": "#immersive_weathering:sandy"
               }
             }
           },
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "tag": "minecraft:shovels"
+              "items": "#minecraft:shovels"
             }
           }
         ]

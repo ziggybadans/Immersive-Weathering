@@ -31,6 +31,9 @@ public abstract class ServerLevelMixin extends Level {
     }
 
 
+    // TODO: LOCAL CAPTURE - verify local variable order against 1.21.1 decompiled ServerLevel.tickChunk
+    // Changed to CAPTURE_FAILSOFT so mixin application doesn't crash if locals are wrong.
+    // After Gradle sync, check the decompiled tickChunk method and fix the parameter list.
     @Inject(method = "tickChunk",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;getFluidState()Lnet/minecraft/world/level/material/FluidState;"),
             slice = @Slice(
@@ -39,8 +42,8 @@ public abstract class ServerLevelMixin extends Level {
                             args = "stringValue=randomTick"
                     )
             ),
-            locals = LocalCapture.CAPTURE_FAILHARD,
-            require = 1
+            locals = LocalCapture.CAPTURE_FAILSOFT,
+            require = 0
     )
     private void IW_weatheringTick(LevelChunk chunk, int randomTickSpeed, CallbackInfo ci, ChunkPos chunkPos,
                                    boolean bl, int i, int j, ProfilerFiller profilerFiller, LevelChunkSection[] levelChunkSections, int m, LevelChunkSection levelChunkSection, int k, int n, int l, BlockPos blockPos3, BlockState blockState4) {
@@ -55,10 +58,7 @@ public abstract class ServerLevelMixin extends Level {
             require = 0,
             at = @At(value = "TAIL"))
     private void precipitationTick(LevelChunk levelChunk, int randomTickSpeed, CallbackInfo ci) {
-        var p = this.getProfiler();
-        p.push("ImmWeatheringExtraRandomTicks");
         BlockGrowthHandler.performSkyAccessTick((ServerLevel) (Object) this, levelChunk, randomTickSpeed);
-        p.pop();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.blocks;
 
+import com.mojang.serialization.MapCodec;
 import com.ordana.immersive_weathering.entities.FallingLayerEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -29,6 +30,7 @@ import java.util.Collections;
  */
 
 public class LayerBlock extends FallingBlock {
+    public static final MapCodec<LayerBlock> CODEC = simpleCodec(LayerBlock::new);
     public static final IntegerProperty LAYERS_8 = BlockStateProperties.LAYERS;
     private static final VoxelShape[] SHAPE_BY_LAYER = new VoxelShape[8 + 1];
 
@@ -63,6 +65,11 @@ public class LayerBlock extends FallingBlock {
     }
 
     @Override
+    protected MapCodec<? extends FallingBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
     public void onPlace(BlockState state, Level levelIn, BlockPos pos, BlockState oldState, boolean isMoving) {
         if (state.getBlock() != oldState.getBlock())
             levelIn.scheduleTick(pos, this, this.getDelayAfterPlace());
@@ -87,7 +94,6 @@ public class LayerBlock extends FallingBlock {
         return getDefaultShape(pState);
     }
 
-    @Override
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
         return switch (type) {
             case LAND -> getLayers(state) < 5;

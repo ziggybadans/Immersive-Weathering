@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "immersive_weathering:loam"
+      "id": "immersive_weathering:loam"
     },
     "title": {
       "translate": "advancements.immersive_weathering.dirts.title"

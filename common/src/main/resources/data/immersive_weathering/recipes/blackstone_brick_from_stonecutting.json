@@ -3,6 +3,8 @@
   "ingredient": {
     "item": "minecraft:polished_blackstone"
   },
-  "result": "immersive_weathering:blackstone_brick",
-  "count": 16
+  "result": {
+    "id": "immersive_weathering:blackstone_brick",
+    "count": 16
+  }
 }

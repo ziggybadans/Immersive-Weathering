@@ -13,7 +13,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:mulch_block",
-    "count": 4
+    "count": 4,
+    "id": "immersive_weathering:mulch_block"
   }
 }

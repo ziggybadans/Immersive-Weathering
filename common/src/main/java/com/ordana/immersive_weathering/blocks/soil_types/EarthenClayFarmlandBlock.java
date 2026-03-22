@@ -102,9 +102,8 @@ public class EarthenClayFarmlandBlock extends ModFarmlandBlock {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
+    protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (!player.isSecondaryUseActive()) {
-            ItemStack stack = player.getItemInHand(hand);
             if (stack.is(Items.WATER_BUCKET) && state.getValue(MOISTURE) == 0) {
                 level.playSound(player, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0f, 1.0f);
                 if (player instanceof ServerPlayer) {
@@ -113,7 +112,7 @@ public class EarthenClayFarmlandBlock extends ModFarmlandBlock {
                     level.setBlockAndUpdate(pos, state.setValue(MOISTURE, 7));
                     player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide);
+                return net.minecraft.world.ItemInteractionResult.sidedSuccess(level.isClientSide);
             }
             else if (stack.is(Items.BUCKET) && state.getValue(MOISTURE) > 0) {
                 level.playSound(player, pos, SoundEvents.BUCKET_FILL, SoundSource.BLOCKS, 1.0f, 1.0f);
@@ -123,9 +122,9 @@ public class EarthenClayFarmlandBlock extends ModFarmlandBlock {
                     level.setBlockAndUpdate(pos, state.setValue(MOISTURE, 0));
                     player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
                 }
-                return InteractionResult.SUCCESS;
+                return net.minecraft.world.ItemInteractionResult.SUCCESS;
             }
         }
-        return super.use(state, level, pos, player, hand, hit);
+        return super.useItemOn(stack, state, level, pos, player, hand, hit);
     }
 }

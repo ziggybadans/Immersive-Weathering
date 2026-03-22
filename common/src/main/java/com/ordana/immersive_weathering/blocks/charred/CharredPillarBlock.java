@@ -66,20 +66,20 @@ public class CharredPillarBlock extends RotatedPillarBlock implements Charred {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        return Charred.super.use(state, level, pos, player, hand, hitResult);
+    public net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        return Charred.super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult pHit, Projectile projectile) {
         BlockPos pos = pHit.getBlockPos();
-        interactWithProjectile(level, state, projectile, pos);
+        interactWithEntity(level, state, projectile, pos);
     }
 
     @Override
     public void entityInside(BlockState state, Level levelIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof Projectile projectile) {
-            interactWithProjectile(levelIn, state, projectile, pos);
+            interactWithEntity(levelIn, state, projectile, pos);
         }
     }
 
@@ -93,5 +93,4 @@ public class CharredPillarBlock extends RotatedPillarBlock implements Charred {
         Charred.super.randomTick(state, level, pos, random);
     }
 }
-
 

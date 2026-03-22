@@ -6,6 +6,7 @@ import net.mehvahdjukaar.moonlight.api.misc.RegSupplier;
 import net.mehvahdjukaar.moonlight.api.platform.RegHelper;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.ItemLike;
 
@@ -266,7 +267,7 @@ public class ModCreativeTab {
         //if (CommonConfigs.isEnabled(key)) {
         ItemLike[] entries = Arrays.stream(items).map((s -> (ItemLike) (s.get()))).toArray(ItemLike[]::new);
         if(MOD_TAB != null){
-            tab = MOD_TAB.getKey();
+            tab = ResourceKey.create(Registries.CREATIVE_MODE_TAB, MOD_TAB.getId());
         }
         event.addAfter(tab, targetPred, entries);
     }
@@ -281,7 +282,7 @@ public class ModCreativeTab {
         //if (CommonConfigs.isEnabled(key)) {
         ItemLike[] entries = Arrays.stream(items).map(s -> (ItemLike) s.get()).toArray(ItemLike[]::new);
         if(MOD_TAB != null){
-            tab = MOD_TAB.getKey();
+            tab = ResourceKey.create(Registries.CREATIVE_MODE_TAB, MOD_TAB.getId());
         }
         event.addBefore(tab, targetPred, entries);
         //}

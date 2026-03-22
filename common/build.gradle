@@ -8,8 +8,8 @@ loom {
 
 dependencies {
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
-    modImplementation("curse.maven:selene-499980:5619072")
-    modImplementation "dev.emi:emi-xplat-intermediary:${rootProject.emi_version}:api"
+    modImplementation("maven.modrinth:moonlight:${rootProject.moonlight_fabric_modrinth_version}")
+    modCompileOnly "dev.emi:emi-xplat-intermediary:${rootProject.emi_version}:api"
 }
 
 publishing {
@@ -31,4 +31,5 @@ publishing {
 
 repositories {
     maven { url "https://maven.terraformersmc.com/releases" }
+    maven { url "https://api.modrinth.com/maven" }
 }

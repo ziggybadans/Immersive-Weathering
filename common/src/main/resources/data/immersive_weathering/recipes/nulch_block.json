@@ -13,7 +13,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:nulch_block",
-    "count": 4
+    "count": 4,
+    "id": "immersive_weathering:nulch_block"
   }
 }

@@ -27,7 +27,7 @@ public class ImmersiveWeathering {
     public static final Logger LOGGER = LogManager.getLogger();
 
     public static ResourceLocation res(String name) {
-        return new ResourceLocation(MOD_ID, name);
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID, name);
     }
 
     //called either on mod creation on fabric or mod setup on forge

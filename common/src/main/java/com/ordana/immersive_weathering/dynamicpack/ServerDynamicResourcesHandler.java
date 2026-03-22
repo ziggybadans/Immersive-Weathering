@@ -35,11 +35,6 @@ public class ServerDynamicResourcesHandler extends DynServerResourcesGenerator {
     }
 
     @Override
-    public boolean dependsOnLoadedPacks() {
-        return true;
-    }
-
-    @Override
     public void regenerateDynamicAssets(ResourceManager manager) {
 
         //tag

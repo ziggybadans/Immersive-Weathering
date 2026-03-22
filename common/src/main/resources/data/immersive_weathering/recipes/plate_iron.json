@@ -10,7 +10,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:plate_iron",
-    "count": 8
+    "count": 8,
+    "id": "immersive_weathering:plate_iron"
   }
 }

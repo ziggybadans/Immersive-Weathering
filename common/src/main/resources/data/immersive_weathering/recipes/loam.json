@@ -34,7 +34,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:loam",
-    "count": 4
+    "count": 4,
+    "id": "immersive_weathering:loam"
   }
 }

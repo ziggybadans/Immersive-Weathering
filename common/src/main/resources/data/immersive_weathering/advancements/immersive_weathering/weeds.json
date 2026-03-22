@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "immersive_weathering:weeds"
+      "id": "immersive_weathering:weeds"
     },
     "title": {
       "translate": "advancements.immersive_weathering.weeds.title"

@@ -1,8 +1,8 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "com.ordana.immersive_weathering.mixins.forge",
-  "compatibilityLevel": "JAVA_16",
+  "package": "com.ordana.immersive_weathering.mixins.neoforge",
+  "compatibilityLevel": "JAVA_21",
   "client": [
     "AccessorBlockColor",
     "AccessorItemColor"

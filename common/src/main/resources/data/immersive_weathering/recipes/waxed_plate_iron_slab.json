@@ -10,7 +10,7 @@
     }
   },
   "result": {
-    "item": "immersive_weathering:waxed_plate_iron_slab",
-    "count": 6
+    "count": 6,
+    "id": "immersive_weathering:waxed_plate_iron_slab"
   }
 }

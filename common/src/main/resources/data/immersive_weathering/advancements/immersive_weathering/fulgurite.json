@@ -1,7 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "immersive_weathering:fulgurite"
+      "id": "immersive_weathering:fulgurite"
     },
     "title": {
       "translate": "advancements.immersive_weathering.fulgurite.title"

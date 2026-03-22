@@ -2,6 +2,7 @@ package com.ordana.immersive_weathering.data.block_growths.growths.builtin;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.ordana.immersive_weathering.data.block_growths.TickSource;
 import com.ordana.immersive_weathering.data.block_growths.growths.IBlockGrowth;
@@ -34,7 +35,7 @@ public abstract class BuiltinBlockGrowth implements IBlockGrowth {
                                         .forGetter(b -> Optional.ofNullable(b.owners)),
                                 StrOpt.of(Codec.FLOAT, "growth_chance", 1f).forGetter(b -> b.growthChance)
                         ).apply(i, (o, s, c) -> factory.create(n, s.orElse(null), o, c)));
-                        return DataResult.success(codec);
+                        return DataResult.success(MapCodec.assumeMapUnsafe(codec));
                     });
 
 

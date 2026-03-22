@@ -3,7 +3,9 @@
   "ingredient": {
     "tag": "immersive_weathering:flammable_fences"
   },
-  "result": "immersive_weathering:charred_fence",
+  "result": {
+    "id": "immersive_weathering:charred_fence"
+  },
   "experience": 0.15,
   "cookingtime": 200
 }

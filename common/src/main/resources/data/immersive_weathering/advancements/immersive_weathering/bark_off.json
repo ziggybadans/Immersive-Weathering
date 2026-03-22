@@ -1,8 +1,7 @@
 {
   "display": {
     "icon": {
-      "item": "minecraft:wooden_axe",
-      "nbt": "{Damage:0}"
+      "id": "minecraft:wooden_axe"
     },
     "title": {
       "translate": "advancements.immersive_weathering.bark_off.title"
@@ -25,14 +24,14 @@
             "condition": "minecraft:location_check",
             "predicate": {
               "block": {
-                "tag": "immersive_weathering:raw_logs"
+                "blocks": "#immersive_weathering:raw_logs"
               }
             }
           },
           {
             "condition": "minecraft:match_tool",
             "predicate": {
-              "tag": "minecraft:axes"
+              "items": "#minecraft:axes"
             }
           }
         ]

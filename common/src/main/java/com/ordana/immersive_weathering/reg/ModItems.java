@@ -92,7 +92,7 @@ public class ModItems {
             () -> new HoneycombItem(new Item.Properties()));
 
     public static final Supplier<Item> STEEL_WOOL = regItem("steel_wool", () ->
-            new Item(new Item.Properties().defaultDurability(128)));
+            new Item(new Item.Properties().durability(128)));
 
     public static final Supplier<Item> ICE_SICKLE = regItem("ice_sickle", () ->
             new IceSickleItem(IcicleToolMaterial.INSTANCE, 5, -1f,
@@ -114,8 +114,9 @@ public class ModItems {
         for (WoodType type : woodTypes) {
             String name = !type.canBurn() ? type.getVariantId("scales", false) : type.getVariantId("bark", false);
 
-            Item item = new WoodBasedItem(new Item.Properties(), type, 200);
+            Item item = new WoodBasedItem(new Item.Properties(), type);
             event.register(ImmersiveWeathering.res(name), item);
+            RegHelper.registerItemBurnTime(item, 200);
             BARK.put(type, item);
             type.addChild("immersive_weathering:bark", item);
         }

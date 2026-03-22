@@ -21,7 +21,7 @@ import net.minecraft.world.phys.BlockHitResult;
 public class CharredFenceGateBlock extends FenceGateBlock implements Charred {
 
     public CharredFenceGateBlock(Properties properties, WoodType type) {
-        super(properties, type);
+        super(type, properties);
         this.registerDefaultState(this.defaultBlockState().setValue(OVERHANG, 0).setValue(SMOLDERING, false).setValue(OPEN, false).setValue(POWERED, false).setValue(IN_WALL, false));
     }
 
@@ -75,20 +75,20 @@ public class CharredFenceGateBlock extends FenceGateBlock implements Charred {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
-        return Charred.super.use(state, level, pos, player, hand, hitResult);
+    public net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult) {
+        return Charred.super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override
     public void onProjectileHit(Level level, BlockState state, BlockHitResult pHit, Projectile projectile) {
         BlockPos pos = pHit.getBlockPos();
-        interactWithProjectile(level, state, projectile, pos);
+        interactWithEntity(level, state, projectile, pos);
     }
 
     @Override
     public void entityInside(BlockState state, Level levelIn, BlockPos pos, Entity entityIn) {
         if (entityIn instanceof Projectile projectile) {
-            interactWithProjectile(levelIn, state, projectile, pos);
+            interactWithEntity(levelIn, state, projectile, pos);
         }
     }
 }

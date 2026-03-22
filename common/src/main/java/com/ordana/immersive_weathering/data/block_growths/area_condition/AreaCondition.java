@@ -2,6 +2,7 @@ package com.ordana.immersive_weathering.data.block_growths.area_condition;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.ordana.immersive_weathering.data.block_growths.growths.ConfigurableBlockGrowth;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -30,7 +31,7 @@ public interface AreaCondition {
     };
 
     Codec<AreaCondition> CODEC = AreaConditionType.CODEC
-            .dispatch("type", AreaCondition::getType, AreaConditionType::codec);
+            .dispatch("type", AreaCondition::getType, AreaConditionType::mapCodec);
 
 
     Map<String, AreaConditionType<? extends AreaCondition>> TYPES = new HashMap<>() {{
@@ -57,6 +58,10 @@ public interface AreaCondition {
                 (name) -> get(name).map(DataResult::success).orElseGet(
                         () -> DataResult.error(() -> "Unknown Area Condition: " + name)),
                 (t) -> DataResult.success(t.name()));
+
+        MapCodec<T> mapCodec() {
+            return MapCodec.assumeMapUnsafe(codec);
+        }
     }
 
 }
