@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.data.block_growths.growths.builtin;
 
+import com.ordana.immersive_weathering.ImmersiveWeathering;
 import com.ordana.immersive_weathering.blocks.FulguriteBlock;
 import com.ordana.immersive_weathering.blocks.cracked.Crackable;
 import com.ordana.immersive_weathering.configs.CommonConfigs;
@@ -35,8 +36,14 @@ public class LightningGrowth extends BuiltinBlockGrowth {
     @Override
     public @Nullable Iterable<Block> getOwners() {
         List<Block> blocks = new ArrayList<>();
-        BuiltInRegistries.BLOCK.getTag(BlockTags.SAND).get().stream().forEach(h -> blocks.add(h.value()));
-        BuiltInRegistries.BLOCK.getTag(ModTags.CRACKABLE).get().stream().forEach(h -> blocks.add(h.value()));
+        BuiltInRegistries.BLOCK.getTag(BlockTags.SAND).ifPresentOrElse(
+                tag -> tag.stream().forEach(h -> blocks.add(h.value())),
+                () -> ImmersiveWeathering.LOGGER.warn("Missing block tag {} while loading builtin growth {}", BlockTags.SAND.location(), getName())
+        );
+        BuiltInRegistries.BLOCK.getTag(ModTags.CRACKABLE).ifPresentOrElse(
+                tag -> tag.stream().forEach(h -> blocks.add(h.value())),
+                () -> ImmersiveWeathering.LOGGER.warn("Missing block tag {} while loading builtin growth {}", ModTags.CRACKABLE.location(), getName())
+        );
         return blocks;
     }
 

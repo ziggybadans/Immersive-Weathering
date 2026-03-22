@@ -2,7 +2,7 @@
   "replace": false,
   "values": [
     "#minecraft:flowers",
-    "minecraft:grass",
+    "minecraft:short_grass",
     "minecraft:fern",
     "immersive_weathering:frosty_grass",
     "immersive_weathering:frosty_fern",

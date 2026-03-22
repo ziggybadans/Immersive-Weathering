@@ -1,5 +1,6 @@
 package com.ordana.immersive_weathering.data.block_growths.growths.builtin;
 
+import com.ordana.immersive_weathering.ImmersiveWeathering;
 import com.ordana.immersive_weathering.blocks.ModBlockProperties;
 import com.ordana.immersive_weathering.blocks.sandy.Sandy;
 import com.ordana.immersive_weathering.data.block_growths.TickSource;
@@ -31,8 +32,14 @@ public class SandGrowth extends BuiltinBlockGrowth {
     @Override
     public @Nullable Iterable<Block> getOwners() {
         List<Block> blocks = new ArrayList<>();
-        BuiltInRegistries.BLOCK.getTag(ModTags.SANDABLE).get().stream().forEach(h -> blocks.add(h.value()));
-        BuiltInRegistries.BLOCK.getTag(ModTags.SANDY).get().stream().forEach(h -> blocks.add(h.value()));
+        BuiltInRegistries.BLOCK.getTag(ModTags.SANDABLE).ifPresentOrElse(
+                tag -> tag.stream().forEach(h -> blocks.add(h.value())),
+                () -> ImmersiveWeathering.LOGGER.warn("Missing block tag {} while loading builtin growth {}", ModTags.SANDABLE.location(), getName())
+        );
+        BuiltInRegistries.BLOCK.getTag(ModTags.SANDY).ifPresentOrElse(
+                tag -> tag.stream().forEach(h -> blocks.add(h.value())),
+                () -> ImmersiveWeathering.LOGGER.warn("Missing block tag {} while loading builtin growth {}", ModTags.SANDY.location(), getName())
+        );
         return blocks;
     }
 
