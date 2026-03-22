@@ -71,10 +71,11 @@ public class EmiIntegration implements EmiPlugin {
 
         EmiStack water = EmiStack.of(Fluids.WATER);
         EmiStack lava = EmiStack.of(Fluids.LAVA);
+        EmiIngredient quartzBlocks = EmiIngredient.of(ModTags.QUARTZ_BLOCKS);
 
         var style = Style.EMPTY.applyFormats(ChatFormatting.GREEN);
-        EmiStack waterCatalyst = water.copy().setRemainder(water);
-        EmiStack lavaCatalyst = lava.copy().setRemainder(lava);
+        EmiStack waterCatalyst = water.isEmpty() ? EmiStack.EMPTY : water.copy().setRemainder(water);
+        EmiStack lavaCatalyst = lava.isEmpty() ? EmiStack.EMPTY : lava.copy().setRemainder(lava);
 
 
 
@@ -127,7 +128,7 @@ public class EmiIntegration implements EmiPlugin {
         BiMap<Block, Block> flowering = WeatheringHelper.FLOWERY_BLOCKS.get();
         for (Block key : flowering.keySet()) {
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", key.getDescriptionId()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/" + key.getDescriptionId()))
                 .leftInput(EmiStack.of(flowering.get(key)))
                 .rightInput(azalea, false)
                 .output(EmiStack.of(key))
@@ -136,7 +137,7 @@ public class EmiIntegration implements EmiPlugin {
         BiMap<Block, Block> unflowering = WeatheringHelper.FLOWERY_BLOCKS.get().inverse();
         for (Block key : unflowering.keySet()) {
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
-                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", key.getDescriptionId()))
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/" + key.getDescriptionId()))
                 .leftInput(EmiStack.of(unflowering.get(key)))
                 .rightInput(shears, true)
                 .output(azalea)
@@ -331,12 +332,13 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack raw_log = EmiStack.of(key);
             EmiStack stripped_log = EmiStack.of(log.get(key));
             Item barkToStrip = WeatheringHelper.getBarkToStrip(key.defaultBlockState());
-            if(barkToStrip == null){
-                //error;
-                int aa = 1;
+            if (barkToStrip == null) {
+                barkToStrip = WeatheringHelper.getBarkForStrippedLog(log.get(key).defaultBlockState())
+                    .map(p -> p.getFirst()).orElse(null);
             }
+            if (barkToStrip == null) continue;
             EmiStack bark = EmiStack.of(barkToStrip);
-            if (bark == null) bark = EmiStack.of(WeatheringHelper.getBarkForStrippedLog(log.get(key).defaultBlockState()).get().getFirst());
+            if (bark.isEmpty()) continue;
 
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
                 .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/block_stripping/" + blockId.getNamespace() + "/" + blockId.getPath()))
@@ -351,12 +353,13 @@ public class EmiIntegration implements EmiPlugin {
             EmiStack raw_log = EmiStack.of(key);
             EmiStack stripped_log = EmiStack.of(log.get(key));
             Item barkToStrip = WeatheringHelper.getBarkToStrip(key.defaultBlockState());
-            if(barkToStrip == null){
-                //error;
-                int aa = 1;
+            if (barkToStrip == null) {
+                barkToStrip = WeatheringHelper.getBarkForStrippedLog(log.get(key).defaultBlockState())
+                    .map(p -> p.getFirst()).orElse(null);
             }
+            if (barkToStrip == null) continue;
             EmiStack bark = EmiStack.of(barkToStrip);
-            if (bark == null) bark = EmiStack.of(WeatheringHelper.getBarkForStrippedLog(log.get(key).defaultBlockState()).get().getFirst());
+            if (bark.isEmpty()) continue;
 
             registry.addRecipe(EmiWorldInteractionRecipe.builder()
                 .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/block_unstripping/" + blockId.getNamespace() + "/" + blockId.getPath()))
@@ -369,101 +372,109 @@ public class EmiIntegration implements EmiPlugin {
 
 
         //FLUID GENERATORS
-        registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/andesite"))
-            .leftInput(waterCatalyst)
-            .rightInput(lavaCatalyst, true)
-            .rightInput(EmiStack.of(Blocks.DIORITE), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
-            .output(EmiStack.of(Blocks.ANDESITE))
-            .build());
+        if (!waterCatalyst.isEmpty() && !lavaCatalyst.isEmpty()) {
+            registry.addRecipe(EmiWorldInteractionRecipe.builder()
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/andesite"))
+                .leftInput(waterCatalyst)
+                .rightInput(lavaCatalyst, true)
+                .rightInput(EmiStack.of(Blocks.DIORITE), true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
+                .output(EmiStack.of(Blocks.ANDESITE))
+                .build());
 
-        registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/diorite"))
-            .leftInput(waterCatalyst)
-            .rightInput(lavaCatalyst, true)
-            .rightInput(EmiIngredient.of(ModTags.QUARTZ_BLOCKS), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
-            .output(EmiStack.of(Blocks.DIORITE))
-            .build());
+            if (!quartzBlocks.isEmpty()) {
+                registry.addRecipe(EmiWorldInteractionRecipe.builder()
+                    .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/diorite"))
+                    .leftInput(waterCatalyst)
+                    .rightInput(lavaCatalyst, true)
+                    .rightInput(quartzBlocks, true, s -> s.appendTooltip(
+                        Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
+                    .output(EmiStack.of(Blocks.DIORITE))
+                    .build());
 
-        registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/granite"))
-            .leftInput(waterCatalyst)
-            .rightInput(lavaCatalyst, true)
-            .rightInput(EmiStack.of(Blocks.DIORITE), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
-            .rightInput(EmiIngredient.of(ModTags.QUARTZ_BLOCKS), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
-            .output(EmiStack.of(Blocks.GRANITE))
-            .build());
+                registry.addRecipe(EmiWorldInteractionRecipe.builder()
+                    .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/granite"))
+                    .leftInput(waterCatalyst)
+                    .rightInput(lavaCatalyst, true)
+                    .rightInput(EmiStack.of(Blocks.DIORITE), true, s -> s.appendTooltip(
+                        Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
+                    .rightInput(quartzBlocks, true, s -> s.appendTooltip(
+                        Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
+                    .output(EmiStack.of(Blocks.GRANITE))
+                    .build());
+            }
+        }
 
-        registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/basalt_below"))
-            .leftInput(lavaCatalyst)
-            .rightInput(EmiStack.of(Blocks.BASALT), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.below").setStyle(style)))
-            .output(EmiStack.of(Blocks.BASALT))
-            .build());
+        if (!lavaCatalyst.isEmpty()) {
+            registry.addRecipe(EmiWorldInteractionRecipe.builder()
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/basalt_below"))
+                .leftInput(lavaCatalyst)
+                .rightInput(EmiStack.of(Blocks.BASALT), true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.below").setStyle(style)))
+                .output(EmiStack.of(Blocks.BASALT))
+                .build());
 
-        registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/blackstone"))
-            .leftInput(lavaCatalyst)
-            .rightInput(EmiStack.of(Blocks.MAGMA_BLOCK), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
-            .rightInput(EmiStack.of(Blocks.BLUE_ICE), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
-            .output(EmiStack.of(Blocks.BLACKSTONE))
-            .build());
+            registry.addRecipe(EmiWorldInteractionRecipe.builder()
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/blackstone"))
+                .leftInput(lavaCatalyst)
+                .rightInput(EmiStack.of(Blocks.MAGMA_BLOCK), true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
+                .rightInput(EmiStack.of(Blocks.BLUE_ICE), true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
+                .output(EmiStack.of(Blocks.BLACKSTONE))
+                .build());
 
-        registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/calcite"))
-            .leftInput(lavaCatalyst)
-            .rightInput(EmiStack.of(Blocks.MAGMA_BLOCK), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
-            .rightInput(EmiStack.of(Blocks.BLUE_ICE), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
-            .rightInput(EmiStack.of(Blocks.BONE_BLOCK), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.below").setStyle(style)))
-            .output(EmiStack.of(Blocks.CALCITE))
-            .build());
+            registry.addRecipe(EmiWorldInteractionRecipe.builder()
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/calcite"))
+                .leftInput(lavaCatalyst)
+                .rightInput(EmiStack.of(Blocks.MAGMA_BLOCK), true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
+                .rightInput(EmiStack.of(Blocks.BLUE_ICE), true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
+                .rightInput(EmiStack.of(Blocks.BONE_BLOCK), true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.below").setStyle(style)))
+                .output(EmiStack.of(Blocks.CALCITE))
+                .build());
 
-        registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/crying_obsidian"))
-            .leftInput(lavaCatalyst)
-            .rightInput(waterCatalyst, true)
-            .rightInput(EmiStack.of(Blocks.SOUL_FIRE), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
-            .output(EmiStack.of(Blocks.CRYING_OBSIDIAN))
-            .build());
+            registry.addRecipe(EmiWorldInteractionRecipe.builder()
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/smooth_basalt"))
+                .leftInput(lavaCatalyst)
+                .rightInput(EmiStack.of(Blocks.BLUE_ICE), true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
+                .rightInput(EmiStack.of(Blocks.SOUL_SOIL), true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.below").setStyle(style)))
+                .output(EmiStack.of(Blocks.SMOOTH_BASALT))
+                .build());
+        }
 
-        registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/magma_block"))
-            .leftInput(lavaCatalyst)
-            .rightInput(waterCatalyst, true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.below").setStyle(style)).appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.rising").setStyle(style)))
-            .output(EmiStack.of(Blocks.MAGMA_BLOCK))
-            .build());
+        if (!lavaCatalyst.isEmpty() && !waterCatalyst.isEmpty()) {
+            registry.addRecipe(EmiWorldInteractionRecipe.builder()
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/crying_obsidian"))
+                .leftInput(lavaCatalyst)
+                .rightInput(waterCatalyst, true)
+                .rightInput(EmiStack.of(Blocks.SOUL_FIRE), true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
+                .output(EmiStack.of(Blocks.CRYING_OBSIDIAN))
+                .build());
 
-        registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/tuff"))
-            .leftInput(lavaCatalyst)
-            .rightInput(waterCatalyst, true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.below").setStyle(style)).appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.sinking").setStyle(style)))
-            .output(EmiStack.of(Blocks.TUFF))
-            .build());
+            registry.addRecipe(EmiWorldInteractionRecipe.builder()
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/magma_block"))
+                .leftInput(lavaCatalyst)
+                .rightInput(waterCatalyst, true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.below").setStyle(style)).appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.rising").setStyle(style)))
+                .output(EmiStack.of(Blocks.MAGMA_BLOCK))
+                .build());
 
-        registry.addRecipe(EmiWorldInteractionRecipe.builder()
-            .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/smooth_basalt"))
-            .leftInput(lavaCatalyst)
-            .rightInput(EmiStack.of(Blocks.BLUE_ICE), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.adjacent").setStyle(style)))
-            .rightInput(EmiStack.of(Blocks.SOUL_SOIL), true, s -> s.appendTooltip(
-                Component.translatable("tooltip.immersive_weathering.below").setStyle(style)))
-            .output(EmiStack.of(Blocks.SMOOTH_BASALT))
-            .build());
+            registry.addRecipe(EmiWorldInteractionRecipe.builder()
+                .id(ResourceLocation.fromNamespaceAndPath("immersive_weathering", "/tuff"))
+                .leftInput(lavaCatalyst)
+                .rightInput(waterCatalyst, true, s -> s.appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.below").setStyle(style)).appendTooltip(
+                    Component.translatable("tooltip.immersive_weathering.sinking").setStyle(style)))
+                .output(EmiStack.of(Blocks.TUFF))
+                .build());
+        }
 
     }
 }

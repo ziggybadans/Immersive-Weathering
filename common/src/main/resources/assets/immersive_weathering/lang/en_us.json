@@ -457,6 +457,23 @@
 
   "item.immersive_weathering.bark": "%s Bark",
   "block.immersive_weathering.leaf_pile": "%s Leaf Pile",
+  "tag.item.immersive_weathering.bark": "Bark",
+  "tag.item.immersive_weathering.bricks": "Bricks",
+  "tag.item.immersive_weathering.clean_iron": "Clean Iron",
+  "tag.item.immersive_weathering.clean_iron_smelting": "Smelts to Clean Iron",
+  "tag.item.immersive_weathering.exposed_iron": "Exposed Iron",
+  "tag.item.immersive_weathering.exposed_iron_smelting": "Smelts to Exposed Iron",
+  "tag.item.immersive_weathering.flammable_fence_gates": "Flammable Fence Gates",
+  "tag.item.immersive_weathering.flammable_fences": "Flammable Fences",
+  "tag.item.immersive_weathering.flammable_planks": "Flammable Planks",
+  "tag.item.immersive_weathering.flammable_slabs": "Flammable Slabs",
+  "tag.item.immersive_weathering.flammable_stairs": "Flammable Stairs",
+  "tag.item.immersive_weathering.rusted_iron": "Rusted Iron",
+  "tag.item.immersive_weathering.rusted_iron_smelting": "Smelts to Rusted Iron",
+  "tag.item.immersive_weathering.scales": "Scales",
+  "tag.item.immersive_weathering.wax": "Wax",
+  "tag.item.immersive_weathering.weathered_iron": "Weathered Iron",
+  "tag.item.immersive_weathering.weathered_iron_smelting": "Smelts to Weathered Iron",
 
   "sound.immersive_weathering.ice.crack": "Thin Ice cracks"
 }
