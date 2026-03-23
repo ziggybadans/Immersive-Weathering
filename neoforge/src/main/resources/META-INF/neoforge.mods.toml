@@ -1,0 +1,34 @@
+modLoader = "javafml"
+loaderVersion = "[4,)"
+license = "LGPLv3"
+
+[[mods]]
+modId = "immersive_weathering"
+version = "${version}"
+displayName = "Immersive Weathering"
+authors = "Ordana, MehVahdJukaar, Keybounce"
+logoFile = "icon.png"
+description = '''
+An abundance of new natural systems to make your world feel more alive than ever.
+'''
+
+[[dependencies.immersive_weathering]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.immersive_weathering]]
+modId = "minecraft"
+type = "required"
+versionRange = "[1.21.1,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.immersive_weathering]]
+modId = "moonlight"
+type = "required"
+versionRange = "[${moonlight_version},)"
+ordering = "NONE"
+side = "BOTH"
