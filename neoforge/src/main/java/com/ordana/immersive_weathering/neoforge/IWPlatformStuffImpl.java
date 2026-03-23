@@ -26,7 +26,11 @@ public class IWPlatformStuffImpl {
     }
 
     public static FlowingFluid getFlowingFluid(LiquidBlock block) {
-        return block.getFluid();
+        var fluid = block.defaultBlockState().getFluidState().getType();
+        if (fluid instanceof FlowingFluid flowing) {
+            return flowing;
+        }
+        return null;
     }
 
 

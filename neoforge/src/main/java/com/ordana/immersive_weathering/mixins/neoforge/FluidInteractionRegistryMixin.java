@@ -6,6 +6,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.neoforged.neoforge.fluids.FluidInteractionRegistry;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -20,7 +21,10 @@ public class FluidInteractionRegistryMixin {
     private static void immersiveWeatheringDataFluidInteraction(Level level, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         BlockState state = level.getBlockState(pos);
         if (state.getBlock() instanceof LiquidBlock) {
-            var f = ((LiquidBlock) state.getBlock()).getFluid();
+            var fluid = state.getFluidState().getType();
+            if (!(fluid instanceof FlowingFluid f)) {
+                return;
+            }
             boolean lava = state.getFluidState().is(FluidTags.LAVA);
             var successPos = FluidGeneratorsHandler.applyGenerators(f,
                     FluidGeneratorsHandler.POSSIBLE_FLOW_DIRECTIONS, pos, level);
